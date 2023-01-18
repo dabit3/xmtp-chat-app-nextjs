@@ -1,0 +1,113 @@
+import { ApolloClient, InMemoryCache, gql, createHttpLink } from '@apollo/client'
+
+export const client = new ApolloClient({
+  uri: 'https://api.lens.dev',
+  cache: new InMemoryCache()
+})
+
+export const getDefaultProfile = gql`
+  query DefaultProfile(
+    $address: EthereumAddress!
+  ) {
+    defaultProfile(request: { ethereumAddress: $address}) {
+      id
+      name
+      bio
+      isDefault
+      handle
+      picture {
+        ... on MediaSet {
+          original {
+            url
+            mimeType
+          }
+        }
+      }
+    }
+  }
+`
+
+export const getProfile = gql`
+query Profile($handle: Handle) {
+  profile(request: { handle: $handle }) {
+    id
+    name
+    bio
+    attributes {
+      displayType
+      traitType
+      key
+      value
+    }
+    followNftAddress
+    metadata
+    isDefault
+    picture {
+      ... on NftImage {
+        contractAddress
+        tokenId
+        uri
+        verified
+      }
+      ... on MediaSet {
+        original {
+          url
+          mimeType
+        }
+      }
+      __typename
+    }
+    handle
+    coverPicture {
+      ... on NftImage {
+        contractAddress
+        tokenId
+        uri
+        verified
+      }
+      ... on MediaSet {
+        original {
+          url
+          mimeType
+        }
+      }
+      __typename
+    }
+    ownedBy
+    dispatcher {
+      address
+      canUseRelay
+    }
+    stats {
+      totalFollowers
+      totalFollowing
+      totalPosts
+      totalComments
+      totalMirrors
+      totalPublications
+      totalCollects
+    }
+    followModule {
+      ... on FeeFollowModuleSettings {
+        type
+        amount {
+          asset {
+            symbol
+            name
+            decimals
+            address
+          }
+          value
+        }
+        recipient
+      }
+      ... on ProfileFollowModuleSettings {
+        type
+      }
+      ... on RevertFollowModuleSettings {
+        type
+      }
+    }
+  }
+}
+`
