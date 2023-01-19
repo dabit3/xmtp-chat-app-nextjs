@@ -14,7 +14,7 @@ export default function Conversation() {
 
   const [message, setMessage] = useState<string>('')
   let [messages, setMessages] = useState<Record<string,Message>>({})
-  const messagesRef = useRef<any>({})
+  const messagesRef = useRef<Record<string,Message>>({})
 
   useEffect(() => {
     if (!currentConversation) {

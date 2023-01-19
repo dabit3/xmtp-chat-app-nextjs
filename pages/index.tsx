@@ -1,9 +1,8 @@
-import styles from '../styles/Home.module.css'
-import { useState, useReducer, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { client as apolloClient, getDefaultProfile } from '../api'
 import { MainContext } from '../context'
 import Link from 'next/link'
-import { SortDirection, Client } from '@xmtp/xmtp-js'
+import { SortDirection, Client, Conversation } from '@xmtp/xmtp-js'
 
 export const buildConversationKey = (peerAddress: string, conversationId: string): string =>
   `${peerAddress.toLowerCase()}/${conversationId}`;
@@ -55,7 +54,7 @@ export default function Home() {
   async function fetchMessages(xmtp:Client) {
     if (!xmtp) return
     setLoading(true)
-    const allConversations: any[] = await xmtp.conversations.list()
+    const allConversations: Conversation[] = await xmtp.conversations.list()
     let lensConversations = allConversations.filter((conversation) =>
       conversation.context?.conversationId.startsWith('lens.dev/dm/')
     )

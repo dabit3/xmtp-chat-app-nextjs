@@ -2,10 +2,11 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
 import { MainContext } from '../context'
-import { Client } from '@xmtp/xmtp-js'
+import { Client, Conversation } from '@xmtp/xmtp-js'
 import { ethers } from 'ethers'
 import { useState, useRef } from 'react'
 import { Inter } from '@next/font/google'
+import { css } from '@emotion/css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [client, setClient] = useState<Client>()
   const [provider, setProvider] = useState<any>(null)
   const [address, setAddress] = useState('')
-  const [currentConversation, setCurrentConversation] = useState<any>(null)
+  const [currentConversation, setCurrentConversation] = useState<Conversation>()
   const profilesRef = useRef({})
 
   async function connect() {
@@ -45,7 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div style={containerStyle}>
+    <div className={containerStyle}>
       <style jsx global>{`
         html {
           font-family: ${inter.style.fontFamily};
@@ -78,8 +79,12 @@ const linkStyle = {
   marginRight: '20px'
 }
 
-const containerStyle = {
-  width: '800px',
-  margin: '0 auto',
-  paddingTop: 60
-}
+const containerStyle = css`
+  width: 800px;
+  margin: 0 auto;
+  padding-top: 60px;
+  @media (max-width: 800px) {
+    width: 100%;
+    padding: 60px 20px 0px;
+  }
+`
