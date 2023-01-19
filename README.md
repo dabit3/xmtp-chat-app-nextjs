@@ -2,7 +2,7 @@
 
 This is an example of how you might implement encrypted real-time messaging into a web application using XMTP, React, and Next.js
 
-This example shows how to implement messages specific to Lens apps, but the codebase can be made agnostic to any particular app by modifying this code in `create.tsx` to use any prefix you'd like (or none at all):
+This example shows how to implement messages specific to Lens apps, but the codebase can be made agnostic to any underlying protocol or app by modifying this code in `create.tsx` to use any prefix you'd like (or none at all):
 
 ```js
 const PREFIX = 'lens.dev/dm'
